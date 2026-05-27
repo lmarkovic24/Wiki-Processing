@@ -27,6 +27,5 @@ def load_from_file():
 counts, unique = load_from_file()
 
 f = open("output.txt","w",encoding="utf-8")
-
 for key in counts.keys():
     f.write(f"{key}|{len(unique[key])}|{counts[key]}\n")

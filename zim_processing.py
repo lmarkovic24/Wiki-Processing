@@ -88,13 +88,8 @@ def process_zim(zim_file_path):
         except Exception:
             continue
 
-
-
-ZIM_PATH = "srb2.zim"
-
-
+ZIM_PATH = "srb2.zim" # Full 6GB dataset
 process_zim(ZIM_PATH)
-
 save_to_file()
 
 print("Done.")
