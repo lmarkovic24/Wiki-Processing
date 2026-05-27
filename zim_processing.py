@@ -40,14 +40,12 @@ def process_zim(zim_file_path):
         if idx % 1000 == 0:
             print(f"Processed {idx:,}/{total_entries:,}")
 
-        # Autosave
         if idx > 0 and idx % SAVE_EVERY == 0:
             save_to_file()
 
         try:
             entry = archive._get_entry_by_id(idx)
 
-            # Skip redirects
             if entry.is_redirect:
                 continue
 
@@ -64,31 +62,20 @@ def process_zim(zim_file_path):
             except Exception:
                 continue
 
-            # Tracks words already counted for THIS article
             seen_in_article = set()
 
             for word in html_content.split():
 
-                # Remove punctuation
                 for c in CHARS_TO_REMOVE:
                     word = word.replace(c, "")
 
                 if not word:
                     continue
 
-                # Only pure Cyrillic words
                 if not CYRILLIC_RE.fullmatch(word):
                     continue
 
-                # -------------------------
-                # TOTAL OCCURRENCES
-                # -------------------------
-
                 counts[word] = counts.get(word, 0) + 1
-
-                # -------------------------
-                # UNIQUE ARTICLE COUNT
-                # -------------------------
 
                 if word not in seen_in_article:
 
@@ -102,15 +89,12 @@ def process_zim(zim_file_path):
             continue
 
 
-# ---- CONFIG ----
 
 ZIM_PATH = "srb2.zim"
 
-# ---- RUN ----
 
 process_zim(ZIM_PATH)
 
-# Final save
 save_to_file()
 
 print("Done.")
